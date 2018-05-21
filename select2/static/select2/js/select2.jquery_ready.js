@@ -69,5 +69,18 @@ var DjangoSelect2 = window.DjangoSelect2 || {};
                 DjangoSelect2.init(this);
             });
         });
+
+        // FIX: code above only works at least for 1.9 (https://docs.djangoproject.com/en/1.9/ref/contrib/admin/javascript/), we're in 1.8, so:
+        $(".grp-add-handler").on("click",  function () {
+          var self = this
+
+          setTimeout(function() {
+            $form = $(self).parents(".grp-group").find(".grp-items .grp-dynamic-form").last()
+
+            $form.find('.django-select2:not([name*="__prefix__"])').each(function() {
+              DjangoSelect2.init(this);
+            });
+          }, 500)
+        });
     });
 })();
